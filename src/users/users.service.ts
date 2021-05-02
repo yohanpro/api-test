@@ -14,17 +14,21 @@ export class UsersService {
       id: '1',
       name: 'john',
       nickname: 'john_1',
-      password: 'changeme',
       email: 'john@example.com',
     },
     {
       id: '2323',
       name: 'Smith',
       nickname: 'Smith_1',
-      password: 'hellow',
       email: 'smith@example.com',
     },
   ];
+
+  async findUser(email: string): Promise<User | undefined> {
+    return this.userModel.findOne({ email }, (err, result) => {
+      console.log('result  ', result);
+    });
+  }
 
   async createUser(userData) {
     const { name, password, email, nickname } = userData;
@@ -36,9 +40,7 @@ export class UsersService {
       nickname,
     });
     const result = await newUser.save();
-
-    console.log('createUser: ', result);
-    return 'hihi';
+    return result;
   }
   // async findOne(username: string): Promise<User | undefined> {
   //   return this.users.find((user) => user.username === username);

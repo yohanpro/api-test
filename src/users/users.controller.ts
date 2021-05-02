@@ -7,9 +7,9 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
-  getUser() {
-    console.log('ㅇㅕ기까지는?', process.env.MY_NAME);
-    return 'hi';
+  getUser(@Body() userEmail) {
+    const { email } = userEmail;
+    return this.userService.findUser(email);
   }
 
   @Post()
