@@ -15,19 +15,21 @@ export class UsersService {
       name: 'john',
       nickname: 'john_1',
       email: 'john@example.com',
+      account_status: 0,
     },
     {
       id: '2323',
       name: 'Smith',
       nickname: 'Smith_1',
       email: 'smith@example.com',
+      account_status: 1,
     },
   ];
 
   async findUser(email: string): Promise<User | undefined> {
-    return this.userModel.findOne({ email }, (err, result) => {
-      console.log('result  ', result);
-    });
+    return this.userModel
+      .findOne({ email })
+      .then((result) => result.toObject());
   }
 
   async createUser(userData) {

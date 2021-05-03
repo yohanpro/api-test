@@ -5,6 +5,7 @@ export const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
   nickname: { type: String, required: true },
   user_id: { type: String, required: true },
+  account_status: { type: Number, required: true },
 });
 
 export interface User {
@@ -12,4 +13,5 @@ export interface User {
   name: string;
   email: string;
   nickname: string;
+  account_status: number;
 }

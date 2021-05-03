@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
+import { jwtConstants } from './constants';
 
 /**
  * 1.google에서 준 jwt 파싱
@@ -20,20 +21,17 @@ export class AuthService {
 
   async postUserToken(payload, vendor: string) {
     const { token } = payload;
-    const jwtParsedResult = this.jwtService.verify(token);
-    console.log(
-      '🚀 ~ file: auth.service.ts ~ line 24 ~ AuthService ~ postUserToken ~ jwtParsedResult',
-      jwtParsedResult
-    );
+    const jwtParsedResult = this.jwtService.decode(token);
+    const userEmail = jwtParsedResult['email'];
 
-    //
-    // console.log('errrr', email);
-    // const user = await this.usersService.findUser(email);
-    // console.log(
-    //   '🚀 ~ file: auth.service.ts ~ line 30 ~ AuthService ~ postUserToken ~ user',
-    //   user
-    // );
+    const user = await this.usersService.findUser(userEmail);
 
-    console.log('vendor가 제대로?', vendor);
+    const userPayload = { user };
+
+    return {
+      access_token: this.jwtService.sign(userPayload, {
+        secret: jwtConstants.secret,
+      }),
+    };
   }
 }
