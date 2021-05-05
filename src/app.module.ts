@@ -8,14 +8,14 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    AuthModule,
-    MoviesModule,
-    UsersModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath:
         process.env.NODE_ENV === 'development' ? '.env.dev' : '.env.prod',
     }),
+    AuthModule,
+    MoviesModule,
+    UsersModule,
     MongooseModule.forRoot(
       `mongodb+srv://${process.env.DB_USER_NAME}:${process.env.DB_SECRET}/${process.env.DB_NAME}?retryWrites=true&w=majority`
     ),
