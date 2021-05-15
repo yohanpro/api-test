@@ -25,10 +25,16 @@ export class AuthService {
 
     const user = await this.usersService.findUser(userEmail);
 
-    const userPayload = { user };
+    const { account_status, name, nickname, email } = user;
+    const accessToken = {
+      name,
+      nickname,
+      email,
+    };
 
     return {
-      access_token: this.jwtService.sign(userPayload),
+      account_status,
+      accessToken: this.jwtService.sign(accessToken, { expiresIn: '7 days' }),
     };
   }
 }
