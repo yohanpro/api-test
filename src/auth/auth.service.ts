@@ -37,4 +37,23 @@ export class AuthService {
       accessToken: this.jwtService.sign(accessToken, { expiresIn: '7 days' }),
     };
   }
+
+  async postUserRefreshToekn(payload) {
+    const { token } = payload;
+    const veriftResult = this.jwtService.verify(token);
+
+    const { email } = veriftResult;
+    const user = await this.usersService.findUser(email);
+
+    const { account_status, name, nickname } = user;
+    const accessToken = {
+      name,
+      nickname,
+      email,
+    };
+    return {
+      account_status,
+      accessToken: this.jwtService.sign(accessToken, { expiresIn: '7 days' }),
+    };
+  }
 }

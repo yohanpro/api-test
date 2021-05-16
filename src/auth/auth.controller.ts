@@ -12,4 +12,9 @@ export class AuthController {
   ) {
     return this.authService.postUserToken(payload, vendor);
   }
+
+  @Post('/refresh_token')
+  postUserRefreshToekn(@Body() payload: { token: string }) {
+    return this.authService.postUserRefreshToekn(payload);
+  }
 }
