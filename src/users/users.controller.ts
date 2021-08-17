@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './user.model';
 
 @Controller('users')
 export class UsersController {
@@ -12,7 +11,7 @@ export class UsersController {
   }
 
   @Post()
-  create(@Body() userData: User) {
+  create(@Body() userData) {
     console.log('dfdf', userData);
   }
 }
