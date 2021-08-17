@@ -8,12 +8,11 @@ export class UsersController {
 
   @Get()
   getUser(@Body() userEmail) {
-    const { email } = userEmail;
-    return this.userService.findUser(email);
+    console.log('userEmail', userEmail);
   }
 
   @Post()
   create(@Body() userData: User) {
-    return this.userService.createUser(userData);
+    console.log('dfdf', userData);
   }
 }

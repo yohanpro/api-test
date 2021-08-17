@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
 
 /**
  * 1.google에서 준 jwt 파싱
@@ -13,47 +11,5 @@ import { UsersService } from '../users/users.service';
  */
 @Injectable()
 export class AuthService {
-  constructor(
-    private jwtService: JwtService,
-    private usersService: UsersService
-  ) {}
-
-  async postUserToken(payload, vendor: string) {
-    const { token } = payload;
-    const jwtParsedResult = this.jwtService.decode(token);
-    const userEmail = jwtParsedResult['email'];
-
-    const user = await this.usersService.findUser(userEmail);
-
-    const { account_status, name, nickname, email } = user;
-    const accessToken = {
-      name,
-      nickname,
-      email,
-    };
-
-    return {
-      account_status,
-      accessToken: this.jwtService.sign(accessToken, { expiresIn: '7 days' }),
-    };
-  }
-
-  async postUserRefreshToekn(payload) {
-    const { token } = payload;
-    const veriftResult = this.jwtService.verify(token);
-
-    const { email } = veriftResult;
-    const user = await this.usersService.findUser(email);
-
-    const { account_status, name, nickname } = user;
-    const accessToken = {
-      name,
-      nickname,
-      email,
-    };
-    return {
-      account_status,
-      accessToken: this.jwtService.sign(accessToken, { expiresIn: '7 days' }),
-    };
-  }
+  constructor() {}
 }
